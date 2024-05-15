@@ -1,13 +1,14 @@
-#include <State.cpp>
 #include <gtest/gtest.h>
-TEST(StateTest, HandleStateA)
-{
-  ConcreteStateA stateA;
-  std::stringstream ss;
-  std::streambuf* prev_cout = std::cout.rdbuf(ss.rdbuf()); // Перенаправляем вывод в поток
-  stateA.handle();
-  std::string output = ss.str();
-  EXPECT_EQ(output, "State A handled.\n");
-  std::cout.rdbuf(prev_cout); // Восстанавливаем предыдущий поток
-}
+#include "StatePattern.h"
+TEST(StatePatternTest, StateBHandling) {
+  Context context;
+  State* stateB = new ConcreteStateB();
+  context.setState(stateB);
 
+  testing::internal::CaptureStdout();
+  context.request();
+  std::string output = testing::internal::GetCapturedStdout();
+
+  ASSERT_EQ(output, "State B handled.\n");
+  delete stateB;
+}

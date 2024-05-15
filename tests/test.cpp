@@ -3,8 +3,6 @@
 #include <sstream>
 #include "./../State.cpp"
 
-
-// Test case to check if the context object handles state A correctly
 TEST(StatePatternTest, StateAHandling) {
   Context context;
   State* stateA = new ConcreteStateA();
@@ -18,7 +16,6 @@ TEST(StatePatternTest, StateAHandling) {
   delete stateA;
 }
 
-// Test case to check if the context object handles state B correctly
 TEST(StatePatternTest, StateBHandling) {
   Context context;
   State* stateB = new ConcreteStateB();
@@ -32,7 +29,6 @@ TEST(StatePatternTest, StateBHandling) {
   delete stateB;
 }
 
-// Test case to check if the context object changes states correctly
 TEST(StatePatternTest, StateChange) {
   Context context;
   State* stateA = new ConcreteStateA();

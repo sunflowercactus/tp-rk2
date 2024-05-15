@@ -1,9 +1,11 @@
-TEST(StateTest, HandleStateB)
+TEST(StateTest, HandleStateA)
 {
-  ConcreteStateB stateB;
-  testing::internal::CaptureStdout();
-  stateB.handle();
-  std::string output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(output, "State B handled.\n");
+  ConcreteStateA stateA;
+  std::stringstream ss;
+  std::streambuf* prev_cout = std::cout.rdbuf(ss.rdbuf()); // Перенаправляем вывод в поток
+  stateA.handle();
+  std::string output = ss.str();
+  EXPECT_EQ(output, "State A handled.\n");
+  std::cout.rdbuf(prev_cout); // Восстанавливаем предыдущий поток
 }
 

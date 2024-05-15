@@ -1,12 +1,23 @@
-#include <State.cpp>
 #include <gtest/gtest.h>
-TEST(ContextTest, Request)
-{
+#include "StatePattern.h"
+TEST(StatePatternTest, StateChange) {
   Context context;
-  ConcreteStateA stateA;
-  context.setState(&stateA);
+  State* stateA = new ConcreteStateA();
+  context.setState(stateA);
+
   testing::internal::CaptureStdout();
   context.request();
-  std::string output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(output, "State A handled.\n");
+  std::string outputA = testing::internal::GetCapturedStdout();
+
+  State* stateB = new ConcreteStateB();
+  context.setState(stateB);
+
+  testing::internal::CaptureStdout();
+  context.request();
+  std::string outputB = testing::internal::GetCapturedStdout();
+
+  ASSERT_EQ(outputA, "State A handled.\n");
+  ASSERT_EQ(outputB, "State B handled.\n");
+  delete stateA;
+  delete stateB;
 }

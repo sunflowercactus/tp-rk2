@@ -7,12 +7,8 @@ add_executable(State State.cpp)
 if(BUILD_TESTS)
   enable_testing()
   add_subdirectory(third-party/gtest)
-  set(TEST_SOURCES
-    tests/tests.cpp
-)
-
-add_executable(check ${TEST_SOURCES})
+  file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
+  add_executable(check ${${PROJECT_NAME}_TEST_SOURCES})
   target_link_libraries(check ${PROJECT_NAME} gtest_main)
-  target_link_libraries(check State)
   add_test(NAME check COMMAND check)
 endif()

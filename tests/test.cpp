@@ -3,50 +3,38 @@
 #include <sstream>
 #include "./../State.cpp"
 
-TEST(StatePatternTest, StateAHandling) {
-  Context context;
-  State* stateA = new ConcreteStateA();
-  context.setState(stateA);
+TEST(StateTest, StateAHandle)
+{
+  ConcreteStateA stateA;
+  
+  testing::internal::CaptureStdout();
+  stateA.handle();
+  std::string output = testing::internal::GetCapturedStdout();
+  
+  EXPECT_EQ("State A handled.\n", output);
+}
 
+TEST(StateTest, StateBHandle)
+{
+  ConcreteStateB stateB;
+  
+  testing::internal::CaptureStdout();
+  stateB.handle();
+  std::string output = testing::internal::GetCapturedStdout();
+  
+  EXPECT_EQ("State B handled.\n", output);
+}
+
+TEST(ContextTest, ContextSetState)
+{
+  Context context;
+  ConcreteStateA stateA;
+  
+  context.setState(&stateA);
+  
   testing::internal::CaptureStdout();
   context.request();
   std::string output = testing::internal::GetCapturedStdout();
-
-  ASSERT_EQ(output, "State A handled.\n");
-  delete stateA;
-}
-
-TEST(StatePatternTest, StateBHandling) {
-  Context context;
-  State* stateB = new ConcreteStateB();
-  context.setState(stateB);
-
-  testing::internal::CaptureStdout();
-  context.request();
-  std::string output = testing::internal::GetCapturedStdout();
-
-  ASSERT_EQ(output, "State B handled.\n");
-  delete stateB;
-}
-
-TEST(StatePatternTest, StateChange) {
-  Context context;
-  State* stateA = new ConcreteStateA();
-  context.setState(stateA);
-
-  testing::internal::CaptureStdout();
-  context.request();
-  std::string outputA = testing::internal::GetCapturedStdout();
-
-  State* stateB = new ConcreteStateB();
-  context.setState(stateB);
-
-  testing::internal::CaptureStdout();
-  context.request();
-  std::string outputB = testing::internal::GetCapturedStdout();
-
-  ASSERT_EQ(outputA, "State A handled.\n");
-  ASSERT_EQ(outputB, "State B handled.\n");
-  delete stateA;
-  delete stateB;
+  
+  EXPECT_EQ("State A handled.\n", output);
 }

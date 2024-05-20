@@ -26,19 +26,15 @@ TEST(StateTest, StateBHandle)
 }
 
 
-TEST(ContextTest, ContextSetState)
+TEST(StatePatternTest, StateBHandleTest)
 {
   Context context;
-  ConcreteStateA stateA;
+  State *stateB = new ConcreteStateB();
+  context.setState(stateB);
   
-  context.setState(&stateA);
-  std::stringstream ss;
-  std::streambuf* oldbuf = std::cout.rdbuf(ss.rdbuf());
-
+  testing::internal::CaptureStdout();
   context.request();
-  std::string output = ss.str();
-
-  EXPECT_EQ(output, "State A handled.\n");
-
-  std::cout.rdbuf(oldbuf);
+  std::string output = testing::internal::GetCapturedStdout();
+  
+  EXPECT_EQ(output, "State B handled.\n");
 }

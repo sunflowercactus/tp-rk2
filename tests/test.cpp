@@ -25,16 +25,19 @@ TEST(StateTest, StateBHandle)
   EXPECT_EQ("State B handled.\n", output);
 }
 
+
 TEST(ContextTest, ContextSetState)
 {
   Context context;
   ConcreteStateA stateA;
   
   context.setState(&stateA);
-  
-  testing::internal::CaptureStdout();
+  std::stringstream ss;
+  std::streambuf* oldbuf = std::cout.rdbuf(ss.rdbuf());
+
   context.request();
-  std::string output = testing::internal::GetCapturedStdout();
-  
-  EXPECT_EQ("State A handled.\n", output);
+  std::string output = ss.str();
+
+  EXPECT_TRUE(output == "State A handled.\n");
+  std::cout.rdbuf(oldbuf);
 }

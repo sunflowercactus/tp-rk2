@@ -38,6 +38,7 @@ TEST(ContextTest, ContextSetState)
   context.request();
   std::string output = ss.str();
 
-  EXPECT_TRUE(output == "State A handled.\n");
+  EXPECT_EQ(output, "State A handled.\n");
+
   std::cout.rdbuf(oldbuf);
 }

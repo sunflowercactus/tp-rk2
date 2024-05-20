@@ -4,14 +4,14 @@ project(MyProject)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(BUILD_STATE_APP "Build State1" OFF)
+option(BUILD_STATE    _APP "Build Stateapp" OFF)
 option(BUILD_TESTS "Build tests" OFF)
 
 add_library(State STATIC ${CMAKE_CURRENT_SOURCE_DIR}/State.cpp)
 
 if(BUILD_STATE_APP)
-    add_executable(State1 main.cpp)
-    target_link_libraries(State1 State)
+    add_executable(Stateapp main.cpp)
+    target_link_libraries(Stateapp Sroxy)
 endif()
 
 if(BUILD_TESTS)
